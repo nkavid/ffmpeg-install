@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FFMPEG_BRANCH=$(git config --blob main:.gitmodules --get submodule.FFmpeg.branch)
-FFMPEG_VERSION=$(echo "${FFMPEG_BRANCH}" | sed "s/release\///g" || exit "ffmpeg version string error")
+FFMPEG_VERSION=$(echo "${FFMPEG_BRANCH}" | sed "s/release\///g" || exit 1)
 echo "FFmpeg version: ${FFMPEG_VERSION}"
 
 CUDA_VERSION="12.1"
