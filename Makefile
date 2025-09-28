@@ -1,12 +1,13 @@
 .SILENT:
 
-FFMPEG_PREFIX_PATH="/usr/local/ffmpeg-6.0_gcc-11.3.0_cuda-12.1"
+GCC_VERSION=$(shell gcc --version | grep ^gcc | sed 's/^.* //g')
+CUDA_VERSION=$(shell nvcc --version | grep "Cuda compilation tools" | sed 's/^.* V//g')
+
+FFMPEG_PREFIX_PATH="/usr/local/ffmpeg-6.0_gcc-${GCC_VERSION}_cuda-${CUDA_VERSION}"
 
 CONFIGURE_FFMPEG = ./configure --enable-nonfree \
 --enable-cuda-nvcc \
 --enable-libnpp \
---extra-cflags=-I/usr/local/cuda-12.1/include \
---extra-ldflags=-L/usr/local/cuda-12.1/lib64 \
 --disable-static \
 --enable-shared \
 --prefix=${FFMPEG_PREFIX_PATH}
@@ -26,7 +27,7 @@ configure:
 
 .PHONY: build
 build:
-	(cd FFmpeg && make -j6 all)
+	(cd FFmpeg && make -j$(nproc) all)
 	$(FINISHED_INFO)
 
 .PHONY: install
