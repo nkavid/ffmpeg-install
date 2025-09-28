@@ -5,4 +5,4 @@
 [submodule "nv-codec-headers"]
 	path = nv-codec-headers
 	url = https://github.com/FFmpeg/nv-codec-headers.git
-	branch = master
+	branch = sdk/12.1
